@@ -18,12 +18,12 @@ const fetchWeatherInfo = function(lat,lon) {
     const API_KEY = "5253d1895ec18b3c6485974e30c75532";
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely&appid="+API_KEY+"&units=imperial").then(function(response){
         response.json().then(function(data){
-            //Current Weather Data
-            let currentDate = data.current.dt;
-            let currentTemp = data.current.temp;
-            let currentWind = data.current.wind_speed;
-            let currentHumidity = data.current.humidity;
-            let currentUvi = data.current.uvi;
+            //Todays Weather Data    data.daily[1].dt
+            let currentDate = luxon.DateTime.fromSeconds(data.daily[0].dt).toLocaleString();
+            let currentTemp = data.daily[0].temp.day;
+            let currentWind = data.daily[0].wind_speed;
+            let currentHumidity = data.daily[0].humidity;
+            let currentUvi = data.daily[0].uvi;
 
             console.log(currentDate);
             console.log("Temp "+currentTemp);
@@ -32,7 +32,19 @@ const fetchWeatherInfo = function(lat,lon) {
             console.log("UVI "+currentUvi);
 
             //Future Weather Data
-            for (let i = 0;)
+            for (let i = 1; i < 6; i++) {
+                let Date = luxon.DateTime.fromSeconds(data.daily[i].dt).toLocaleString();
+                let Temp = data.daily[i].temp.day;
+                let Wind = data.daily[i].wind_speed;
+                let Humidity = data.daily[i].humidity;
+                let Uvi = data.daily[i].uvi;
+
+                console.log(Date);
+                console.log("Temp " + Temp);
+                console.log("Wind " + Wind);
+                console.log("Humidity " + Humidity);
+                console.log("UVI " + Uvi);
+            }
         })
     })
 }
