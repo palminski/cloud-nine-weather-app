@@ -2,6 +2,7 @@
 
 const $city = document.querySelector("#city");
 const $todaysDate = document.querySelector("#todays-date");
+const $todaysIcon = document.querySelector("#todays-icon");
 const $todaysTemp = document.querySelector("#todays-temp");
 const $todaysWind = document.querySelector("#todays-wind");
 const $todaysHumidity = document.querySelector("#todays-humidity");
@@ -28,6 +29,7 @@ const fetchWeatherInfo = function(lat,lon,location) {
         response.json().then(function(data){
             //Today's Weather Data
             let currentDate = luxon.DateTime.fromSeconds(data.daily[0].dt).toLocaleString();
+            let currentIcon = data.daily[0].weather[0].icon;
             let currentTemp = data.daily[0].temp.day;
             let currentWind = data.daily[0].wind_speed;
             let currentHumidity = data.daily[0].humidity;
@@ -35,6 +37,7 @@ const fetchWeatherInfo = function(lat,lon,location) {
 
             $city.textContent = location;
             $todaysDate.textContent = currentDate;
+            $todaysIcon.setAttribute("src",`http://openweathermap.org/img/wn/${currentIcon}@2x.png`)
             $todaysTemp.textContent = currentTemp;
             $todaysWind.textContent = currentWind;
             $todaysHumidity.textContent =currentHumidity;
@@ -45,23 +48,28 @@ const fetchWeatherInfo = function(lat,lon,location) {
     
             for (let i = 1; i < 6; i++) {
                 let date = luxon.DateTime.fromSeconds(data.daily[i].dt).toLocaleString();
+                let icon = data.daily[i].weather[0].icon;
                 let temp = data.daily[i].temp.day;
                 let wind = data.daily[i].wind_speed;
                 let humidity = data.daily[i].humidity;
                 
                 let $forecastCard = document.createElement("div");
                 let $date = document.createElement("h3");
+                let $icon = document.createElement("img");
                 let $temp = document.createElement("p");
                 let $wind = document.createElement("p");
                 let $humidity = document.createElement("p");
 
                 $forecastCard.classList = "forecast-card col";
                 $date.textContent = (date);
+                $icon.setAttribute("src",`http://openweathermap.org/img/wn/${icon}@2x.png`);
+                $icon.setAttribute("alt",`weather icon`);
                 $temp.textContent = ("temp: "+temp);
                 $wind.textContent = ("wind: "+wind);
                 $humidity.textContent = ("humidity: "+humidity);
 
                 $forecastCard.appendChild($date);
+                $forecastCard.appendChild($icon);
                 $forecastCard.appendChild($temp);
                 $forecastCard.appendChild($wind);
                 $forecastCard.appendChild($humidity);
