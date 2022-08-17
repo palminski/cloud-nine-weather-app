@@ -1,5 +1,13 @@
 //API KEY FROM BCS: 5253d1895ec18b3c6485974e30c75532
 
+const $city = document.querySelector("#city");
+const $todaysDate = document.querySelector("#todays-date");
+const $todaysTemp = document.querySelector("#todays-temp");
+const $todaysWind = document.querySelector("#todays-wind");
+const $todaysHumidity = document.querySelector("#todays-humidity");
+const $todaysUVI = document.querySelector("#todays-uvi");
+const $forecastCardContainer = document.querySelector("#forcast-card-container");
+
 // this gets lat and lon coords
 const getWeather = function(cityName) {
     const API_KEY = "f5679ff18384584c4ebc83f9054ae558";
@@ -18,33 +26,47 @@ const fetchWeatherInfo = function(lat,lon,location) {
     const API_KEY = "5253d1895ec18b3c6485974e30c75532";
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely&appid="+API_KEY+"&units=imperial").then(function(response){
         response.json().then(function(data){
-            //Todays Weather Data    data.daily[1].dt
+            //Today's Weather Data
             let currentDate = luxon.DateTime.fromSeconds(data.daily[0].dt).toLocaleString();
             let currentTemp = data.daily[0].temp.day;
             let currentWind = data.daily[0].wind_speed;
             let currentHumidity = data.daily[0].humidity;
             let currentUvi = data.daily[0].uvi;
-            
-            console.log(location);
-            console.log(currentDate);
-            console.log("Temp "+currentTemp);
-            console.log("Wind "+ currentWind);
-            console.log("Humidity "+currentHumidity);
-            console.log("UVI "+currentUvi);
 
-            //Future Weather Data
+            $city.textContent = location;
+            $todaysDate.textContent = currentDate;
+            $todaysTemp.textContent = currentTemp;
+            $todaysWind.textContent = currentWind;
+            $todaysHumidity.textContent =currentHumidity;
+            $todaysUVI.textContent = currentUvi;
+
+            //Forecast Weather Data
+            $forecastCardContainer.innerHTML = ("");
+    
             for (let i = 1; i < 6; i++) {
-                let Date = luxon.DateTime.fromSeconds(data.daily[i].dt).toLocaleString();
-                let Temp = data.daily[i].temp.day;
-                let Wind = data.daily[i].wind_speed;
-                let Humidity = data.daily[i].humidity;
-                let Uvi = data.daily[i].uvi;
+                let date = luxon.DateTime.fromSeconds(data.daily[i].dt).toLocaleString();
+                let temp = data.daily[i].temp.day;
+                let wind = data.daily[i].wind_speed;
+                let humidity = data.daily[i].humidity;
+                
+                let $forecastCard = document.createElement("div");
+                let $date = document.createElement("h3");
+                let $temp = document.createElement("p");
+                let $wind = document.createElement("p");
+                let $humidity = document.createElement("p");
 
-                console.log(Date);
-                console.log("Temp " + Temp);
-                console.log("Wind " + Wind);
-                console.log("Humidity " + Humidity);
-                console.log("UVI " + Uvi);
+                $forecastCard.classList = "forecast-card col";
+                $date.textContent = (date);
+                $temp.textContent = ("temp: "+temp);
+                $wind.textContent = ("wind: "+wind);
+                $humidity.textContent = ("humidity: "+humidity);
+
+                $forecastCard.appendChild($date);
+                $forecastCard.appendChild($temp);
+                $forecastCard.appendChild($wind);
+                $forecastCard.appendChild($humidity);
+
+                $forecastCardContainer.appendChild($forecastCard);
             }
         })
     })
