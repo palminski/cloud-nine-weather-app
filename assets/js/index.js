@@ -19,7 +19,7 @@ let history=[];
 if (localStorage.getItem("history")){
     history = JSON.parse(localStorage.getItem("history"))
 }
-console.log(history);
+
 
 //When Search Form Submitted
 const formSubmitHandler = function(event) {
@@ -105,6 +105,16 @@ const fetchWeatherInfo = function(lat,lon,location) {
             $todaysWind.textContent = currentWind;
             $todaysHumidity.textContent =currentHumidity;
             $todaysUVI.textContent = currentUvi;
+            
+            if (currentUvi < 3) {
+                $todaysUVI.classList = "text-success";
+            }
+            else if (currentUvi < 8) {
+                $todaysUVI.classList = "text-warning";
+            }
+            else {
+                $todaysUVI.classList = "text-danger";
+            }
 
             //Forecast Weather Data
             $forecastCardContainer.innerHTML = ("");
