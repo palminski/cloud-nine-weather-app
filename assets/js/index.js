@@ -5,16 +5,16 @@ const getWeather = function(cityName) {
     const API_KEY = "f5679ff18384584c4ebc83f9054ae558";
     fetch("http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=1&appid="+API_KEY).then(function(response){
         response.json().then(function(data){
-            
-            let lat = data[0].lat
-            let lon = data[0].lon
-            fetchWeatherInfo(lat,lon)
+            let location = data[0].name;
+            let lat = data[0].lat;
+            let lon = data[0].lon;
+            fetchWeatherInfo(lat,lon,location);
         })
     })
 }
 
 //This gets weather data
-const fetchWeatherInfo = function(lat,lon) {
+const fetchWeatherInfo = function(lat,lon,location) {
     const API_KEY = "5253d1895ec18b3c6485974e30c75532";
     fetch("https://api.openweathermap.org/data/2.5/onecall?lat="+lat+"&lon="+lon+"&exclude=hourly,minutely&appid="+API_KEY+"&units=imperial").then(function(response){
         response.json().then(function(data){
@@ -24,7 +24,8 @@ const fetchWeatherInfo = function(lat,lon) {
             let currentWind = data.daily[0].wind_speed;
             let currentHumidity = data.daily[0].humidity;
             let currentUvi = data.daily[0].uvi;
-
+            
+            console.log(location);
             console.log(currentDate);
             console.log("Temp "+currentTemp);
             console.log("Wind "+ currentWind);
