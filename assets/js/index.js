@@ -10,7 +10,7 @@
 
 const fetchWeatherInfo = function(cityName) {
     const API_KEY = "f5679ff18384584c4ebc83f9054ae558";
-    fetch("https://api.openweathermap.org/data/2.5/forecast?q="+cityName+"&appid="+API_KEY).then(function(response){
+    fetch("https://api.openweathermap.org/data/2.5/forecast?q="+cityName+"&appid="+API_KEY+"&units=imperial").then(function(response){
         response.json().then(function(data){
             console.log(data);
         })
