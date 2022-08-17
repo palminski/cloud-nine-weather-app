@@ -1,5 +1,6 @@
 //API KEY FROM BCS: 5253d1895ec18b3c6485974e30c75532
 
+//Elements Where Data will be displayed
 const $city = document.querySelector("#city");
 const $todaysDate = document.querySelector("#todays-date");
 const $todaysIcon = document.querySelector("#todays-icon");
@@ -9,6 +10,67 @@ const $todaysHumidity = document.querySelector("#todays-humidity");
 const $todaysUVI = document.querySelector("#todays-uvi");
 const $forecastCardContainer = document.querySelector("#forcast-card-container");
 
+//Searchdar elements
+const $searchForm = document.querySelector("#search-form");
+const $searchInput = document.querySelector("#search-input");
+const $historyButtonsContainer = document.querySelector("#history-buttons");
+
+let history=[];
+if (localStorage.getItem("history")){
+    history = JSON.parse(localStorage.getItem("history"))
+}
+console.log(history);
+
+//When Search Form Submitted
+const formSubmitHandler = function(event) {
+    event.preventDefault();
+    let searchTerm = $searchInput.value.trim();
+    if (searchTerm) {
+        getWeather(searchTerm);
+        $searchInput.value="";
+    }
+    else
+    {
+        alert("Please Enter a city name");
+    }
+}
+
+//When a history button is clicked
+const buttonClickHandler = function(event) {
+    let location = event.target.textContent;
+    if (location){
+        getWeather(location);
+        $searchInput.value="";
+    }
+}
+
+const updateHistory = function(searchTerm){
+    for (let i = 0; i < history.length ; i++){
+        if (history[i] === searchTerm){
+            history.splice(i,1);
+            i = 0;
+        }
+        
+    }
+    history.unshift(searchTerm);
+    while (history.length > 5) {
+        history.pop();
+        console.log(history);
+    }
+    localStorage.setItem("history",JSON.stringify(history));
+    updateHistoryButtons();
+}
+
+const updateHistoryButtons = function() {
+    
+    $historyButtonsContainer.innerHTML="";
+    for (let i = 0; i < history.length; i++) {
+        let $historyButton = document.createElement("button");
+        $historyButton.classList = "btn btn-primary w-100 mb-2";
+        $historyButton.textContent= history[i];
+        $historyButtonsContainer.appendChild($historyButton);
+    }
+}
 // this gets lat and lon coords
 const getWeather = function(cityName) {
     const API_KEY = "f5679ff18384584c4ebc83f9054ae558";
@@ -17,6 +79,7 @@ const getWeather = function(cityName) {
             let location = data[0].name;
             let lat = data[0].lat;
             let lon = data[0].lon;
+            updateHistory(location);
             fetchWeatherInfo(lat,lon,location);
         })
     })
@@ -80,10 +143,7 @@ const fetchWeatherInfo = function(lat,lon,location) {
     })
 }
 
-
-
-//fetchWeatherInfoForecastAPI("Eugene");
-
-
-getWeather("Eugene"); //curently resulting in 401 Unauthorised
+updateHistoryButtons();
+$searchForm.addEventListener("submit",formSubmitHandler);
+$historyButtonsContainer.addEventListener("click",buttonClickHandler);
 
