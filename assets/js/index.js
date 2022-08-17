@@ -74,7 +74,7 @@ const updateHistoryButtons = function() {
 // this gets lat and lon coords
 const getWeather = function(cityName) {
     const API_KEY = "f5679ff18384584c4ebc83f9054ae558";
-    fetch("http://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=1&appid="+API_KEY).then(function(response){
+    fetch("https://api.openweathermap.org/geo/1.0/direct?q="+cityName+"&limit=1&appid="+API_KEY).then(function(response){
         response.json().then(function(data){
             let location = data[0].name;
             let lat = data[0].lat;
@@ -100,7 +100,7 @@ const fetchWeatherInfo = function(lat,lon,location) {
 
             $city.textContent = location;
             $todaysDate.textContent = currentDate;
-            $todaysIcon.setAttribute("src",`http://openweathermap.org/img/wn/${currentIcon}@2x.png`)
+            $todaysIcon.setAttribute("src",`https://openweathermap.org/img/wn/${currentIcon}@2x.png`)
             $todaysTemp.textContent = currentTemp;
             $todaysWind.textContent = currentWind;
             $todaysHumidity.textContent =currentHumidity;
@@ -125,7 +125,7 @@ const fetchWeatherInfo = function(lat,lon,location) {
 
                 $forecastCard.classList = "forecast-card col";
                 $date.textContent = (date);
-                $icon.setAttribute("src",`http://openweathermap.org/img/wn/${icon}@2x.png`);
+                $icon.setAttribute("src",`https://openweathermap.org/img/wn/${icon}@2x.png`);
                 $icon.setAttribute("alt",`weather icon`);
                 $temp.textContent = ("temp: "+temp);
                 $wind.textContent = ("wind: "+wind);
