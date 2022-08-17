@@ -10,28 +10,83 @@
 <body>
     <h1 class="bg-info text-center py-4">Cloud Nine</h1>
 
-    <div class="container">
-        <div class="row">
+    <div class="container px-4">
+        <div class="row ">
 
             <!-- Search Bar and History -->
-            <div class="search col-12 col-md-3 bg-danger">
-                <div class="search-bar text-center">
+            <div class="search col-12 col-md-3">
+                <div class="search-bar text-center bg-info mb-2">
                     <form>
-                        <h2>Search for a City!</h2>
-                        <input type="text" placeholder="Enter City Name">
-                        <button class="btn">Search</button>
+                        <h2>Search for a City</h2>
+                        <input class="w-100 mb-2" type="text" placeholder="Enter City Name">
+                        <button class="btn btn-primary w-100 mb-2">Search</button>
                     </form>
                 </div>
-                <div class="history">
-                    
+
+                <div class="history  bg-info">
+                    <h2>History</h2>
+                    <div id="history-buttons">
+                        <!-- These will be replaces with dynamicaly generated ones! -->
+                        <button class="btn btn-primary w-100 mb-2">Test</button>
+                        <button class="btn btn-primary w-100 mb-2">Test</button>
+                        <button class="btn btn-primary w-100 mb-2">Test</button>
+                        <button class="btn btn-primary w-100 mb-2">Test</button>
+                        <button class="btn btn-primary w-100 mb-2">Test</button>
+                    </div>
                 </div>
             </div>
 
             <!-- Displayed Results -->
-            <div class="info col-12 col-md-9 bg-primary">
-                test
+            <div class="info col-12 col-md-9 ">
+                <div class="bg-info mb-2" id="todays-info">
+                    <h2>City Name</h2>
+                    <p>Temperature</p>
+                    <p>Wind</p>
+                    <p>Humidity</p>
+                    <p>UV Index</p>
+                </div>
+
+                <div class="bg-info" id="forcast-container">
+                    <div class="row" id="forcast-card-container">
+                        <div class="forcast-card col">
+                            <h3>Date</h3>
+                            <p>temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="forcast-card col">
+                            <h3>Date</h3>
+                            <p>temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="forcast-card col">
+                            <h3>Date</h3>
+                            <p>temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="forcast-card col">
+                            <h3>Date</h3>
+                            <p>temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                        <div class="forcast-card col">
+                            <h3>Date</h3>
+                            <p>temp</p>
+                            <p>Wind</p>
+                            <p>Humidity</p>
+                        </div>
+                    </div>
+                    
+
+                </div>
+                
             </div>
         </div>
+    </div>
+
       
 </body>
 </html>
